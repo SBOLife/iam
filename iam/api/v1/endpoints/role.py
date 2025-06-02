@@ -9,9 +9,9 @@ The endpoints use FastAPI for routing and dependency injection.
 
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.db.session import get_session
-from app.schemas.role import Role, RoleCreate
-from app.crud import role as role_crud
+from iam.db.session import get_session
+from iam.schemas.role import Role, RoleCreate
+from iam.crud import role as role_crud
 
 router = APIRouter()
 

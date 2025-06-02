@@ -6,8 +6,8 @@ using SQLAlchemy's async session functionality.
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from app.models.role import Role
-from app.schemas.role import RoleCreate
+from iam.models.role import Role
+from iam.schemas.role import RoleCreate
 
 
 async def create_role(db: AsyncSession, role: RoleCreate) -> Role:

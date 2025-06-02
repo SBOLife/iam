@@ -6,7 +6,7 @@ in the system's database schema using SQLAlchemy ORM.
 
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from app.db.base import Base
+from iam.db.base import Base
 
 
 class Role(Base):

@@ -6,7 +6,7 @@ It includes models for basic user information, user creation, and database repre
 
 from typing import Optional
 from pydantic import BaseModel, EmailStr
-from app.schemas.role import Role
+from iam.schemas.role import Role
 
 
 class UserBase(BaseModel):

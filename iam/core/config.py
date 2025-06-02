@@ -18,6 +18,8 @@ class Settings(BaseSettings):
     """
 
     DATABASE_URL: str
+    REDIS_URL: str
+    RABBITMQ_URL: str
 
     class Config:
         """Inner configuration class for Settings.

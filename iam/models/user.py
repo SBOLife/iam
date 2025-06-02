@@ -6,7 +6,7 @@ schema for storing user information and their role associations.
 
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from app.db.base import Base
+from iam.db.base import Base
 
 
 class User(Base):

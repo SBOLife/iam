@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.v1.endpoints import role, user
+from iam.api.v1.endpoints import role, user
 
 API_VERSION = "v1"
 

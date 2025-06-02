@@ -8,10 +8,10 @@ offline modes, and handles the setup of SQLAlchemy engines and connections.
 import asyncio
 from sqlalchemy.ext.asyncio import create_async_engine
 from alembic import context
-from app.core.config import settings
-from app.db.base import Base
-from app.models.user import User
-from app.models.role import Role
+from iam.core.config import settings
+from iam.db.base import Base
+from iam.models.user import User
+from iam.models.role import Role
 
 
 # this is the Alembic Config object, which provides
