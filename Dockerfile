@@ -1,16 +1,29 @@
-FROM python:3.11
+# Etapa 1: build
+FROM python:3.11-slim as builder
 
 WORKDIR /app
 
-COPY . /app
+# Instalar dependências de build
+RUN apt-get update && apt-get install -y build-essential
 
-RUN pip install --upgrade pip \
-    && pip install .
+COPY pyproject.toml .
+COPY requirements.txt .
 
-EXPOSE 8000
+RUN pip install --upgrade pip && \
+    pip wheel --wheel-dir=/wheels -r requirements.txt
 
-COPY entrypoint.sh /app/entrypoint.sh
+# Etapa 2: runtime
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY --from=builder /wheels /wheels
+COPY --from=builder /app /app
+
+RUN pip install --no-index --find-links=/wheels -r requirements.txt
+
+COPY . .
+
 RUN chmod +x /app/entrypoint.sh
+
 CMD ["/app/entrypoint.sh"]
-
-
