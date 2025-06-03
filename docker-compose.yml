@@ -8,6 +8,7 @@ services:
     container_name: iam_app
     volumes:
       - .:/app
+      - sqlite_data:/data
     working_dir: /app
     environment:
       - DATABASE_URL=sqlite+aiosqlite:///./test.db
@@ -18,10 +19,7 @@ services:
       - rabbitmq
     ports:
       - "8000:8000"
-    
-  networks:
-    kind:
-      external: true
+
   redis:
     image: redis:7
     container_name: iam_redis
@@ -37,5 +35,6 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-    networks:
-      - kind
+
+volumes:
+  sqlite_data:

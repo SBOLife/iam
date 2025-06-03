@@ -7,5 +7,5 @@ spec:
     matchLabels:
       app: iam
   endpoints:
-  - port: 8000
-    path: /metrics
+    - port: http
+      path: /metrics

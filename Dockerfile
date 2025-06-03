@@ -3,7 +3,6 @@ FROM python:3.11-slim as builder
 
 WORKDIR /app
 
-# Instalar dependências de build
 RUN apt-get update && apt-get install -y build-essential
 
 COPY pyproject.toml .
@@ -12,7 +11,6 @@ COPY requirements.txt .
 RUN pip install --upgrade pip && \
     pip wheel --wheel-dir=/wheels -r requirements.txt
 
-# Etapa 2: runtime
 FROM python:3.11-slim
 
 WORKDIR /app
