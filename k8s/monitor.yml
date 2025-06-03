@@ -1,0 +1,11 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: iam-monitor
+spec:
+  selector:
+    matchLabels:
+      app: iam
+  endpoints:
+  - port: 8000
+    path: /metrics
