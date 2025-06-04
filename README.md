@@ -22,10 +22,11 @@ A Python-based asynchronous microservice for managing **Users** and **Roles**, b
 
 ```mermaid
 graph TD
-A[FastAPI] -> B[Async SQLAlchemy DB] -> C[SQLite/PostgreSQL]
-A --> C[Redis Cache]
-A --> D[RabbitMQ]
-A --> E[Prometheus Metrics]
+    A[FastAPI] --> B[Async SQLAlchemy]
+    B --> C[(PostgreSQL)]
+    A --> D[(Redis Cache)]
+    A --> E[[RabbitMQ]]
+    A --> F([Prometheus Metrics])
 ````
 
 * Modular structure based on **Domain-Driven Design (DDD)**.
