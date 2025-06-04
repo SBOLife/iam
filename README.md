@@ -20,11 +20,12 @@ A Python-based asynchronous microservice for managing **Users** and **Roles**, b
 
 ## 🏗️ Architecture
 
-```plaintext
-[FastAPI] -> [Async SQLAlchemy DB] -> [SQLite/PostgreSQL]
-        ↘ [Redis Cache]
-        ↘ [RabbitMQ]
-        ↘ [Prometheus Metrics]
+```mermaid
+graph TD
+A[FastAPI] -> B[Async SQLAlchemy DB] -> C[SQLite/PostgreSQL]
+A --> C[Redis Cache]
+A --> D[RabbitMQ]
+A --> E[Prometheus Metrics]
 ````
 
 * Modular structure based on **Domain-Driven Design (DDD)**.
