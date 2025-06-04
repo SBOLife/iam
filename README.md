@@ -508,4 +508,3 @@ Environment variables:
 - `DATABASE_URL`: Database connection string
 - `REDIS_URL`: Redis connection URL
 - `RABBITMQ_URL`: RabbitMQ connection URL
-```
