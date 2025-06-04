@@ -509,5 +509,3 @@ Environment variables:
 - `REDIS_URL`: Redis connection URL
 - `RABBITMQ_URL`: RabbitMQ connection URL
 ```
-
-These markdown files provide comprehensive documentation for your IAM system, covering all aspects from development to deployment.
