@@ -28,7 +28,8 @@ graph TD
     A --> E[[RabbitMQ]]
     A --> F([Prometheus Metrics])
 ````
-
+---
+## 📚 Design Patterns
 * Modular structure based on **Domain-Driven Design (DDD)**.
 * Core components:
 
