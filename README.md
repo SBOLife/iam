@@ -30,7 +30,7 @@ graph TD
 ````
 ---
 ## 📚 Design Patterns
-* Modular structure based on **Domain-Driven Design (DDD)**.
+* Modular structure based.
 * Core components:
 
   * `api` — REST API Endpoints.
