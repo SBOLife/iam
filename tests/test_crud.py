@@ -6,8 +6,8 @@ operations, specifically focusing on user management functionality.
 """
 
 import pytest
-from iam.crud.user import create_user
-from iam.schemas.user import UserCreate
+from ..iam.crud.user import create_user
+from ..iam.schemas.user import UserCreate
 
 
 @pytest.mark.asyncio

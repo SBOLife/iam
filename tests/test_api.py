@@ -6,7 +6,7 @@ of the API endpoints, including health checks and other API operations.
 
 import pytest
 from httpx import AsyncClient
-from iam.main import app
+from ..iam.main import app
 
 
 @pytest.mark.asyncio

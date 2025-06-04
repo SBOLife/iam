@@ -5,7 +5,7 @@ retrieving values from the cache system.
 """
 
 import pytest
-from iam.core.cache import set_cache, get_cache
+from ..iam.core.cache import set_cache, get_cache
 
 
 @pytest.mark.asyncio

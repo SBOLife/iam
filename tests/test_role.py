@@ -6,8 +6,8 @@ validation and management of roles in the IAM system.
 """
 
 import pytest
-from iam.crud.role import create_role
-from iam.schemas.role import RoleCreate
+from ..iam.crud.role import create_role
+from ..iam.schemas.role import RoleCreate
 
 
 @pytest.mark.asyncio

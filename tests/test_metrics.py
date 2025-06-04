@@ -6,7 +6,7 @@ including response status codes and expected prometheus metrics content.
 
 import pytest
 from httpx import AsyncClient
-from iam.main import app
+from ..iam.main import app
 
 
 @pytest.mark.asyncio
