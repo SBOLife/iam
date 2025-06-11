@@ -1,95 +1,115 @@
-
-# 🛡️ IAM - Identity and Access Management Microservice
+# IAM - Identity and Access Management Microservice
 
 A Python-based asynchronous microservice for managing **Users** and **Roles**, built with **FastAPI**, **SQLAlchemy**, **Redis**, **RabbitMQ**, and prepared for **Kubernetes** deployment.
 
----
+![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)
 
-## ✅ Features
+## Table of Contents
+- [Features](#-features)
+- [Architecture](#-architecture)
+- [Technology Stack](#-technology-stack)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [Running the Project](#-running-the-project)
+- [API Endpoints](#-api-endpoints)
+- [Testing](#-testing)
+- [Deployment](#-deployment)
+- [Monitoring](#-monitoring)
+- [Resilience Patterns](#-resilience-patterns)
+- [Project Structure](#-project-structure)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Contact](#-contact)
 
-- **RESTful API** for user and role management.
-- Asynchronous database access with **SQLAlchemy** and **Alembic**.
-- **Redis caching** for performance optimization.
-- **RabbitMQ** for event-driven messaging.
-- **Circuit breaker** and **retry mechanisms** for resilience.
-- Monitoring with **Prometheus**.
-- Deployment-ready with **Docker** and **Kubernetes**.
-- **Automated tests** with pytest and pytest-asyncio.
+## Features
 
----
+- **User and Role Management**:
+  - Create and manage users with roles
+  - RESTful API endpoints for all operations
+  - Data validation with Pydantic schemas
 
-## 🏗️ Architecture
+- **Performance and Reliability**:
+  - Redis caching for improved performance
+  - RabbitMQ for event-driven messaging
+  - Circuit breaker and retry mechanisms
+  - Prometheus metrics collection
+
+- **Infrastructure**:
+  - Async SQLAlchemy for database operations
+  - Alembic for database migrations
+  - Docker and Kubernetes ready
+  - Health checks and monitoring
+
+## Architecture
 
 ```mermaid
 graph TD
     A[FastAPI] --> B[Async SQLAlchemy]
-    B --> C[(SQLite)]
+    B --> C[(SQLite/PostgreSQL)]
     A --> D[(Redis Cache)]
     A --> E[[RabbitMQ]]
     A --> F([Prometheus Metrics])
-````
----
-## 📚 Design Patterns
-* Modular structure based.
-* Core components:
+```
 
-  * `api` — REST API Endpoints.
-  * `crud` — Data access logic.
-  * `models` — ORM Models.
-  * `schemas` — Data validation with Pydantic.
-  * `core` — Configurations, cache, messaging, resilience.
-  * `db` — Database session and base models.
+## Design Patterns
 
----
+- **Modular Structure**:
+  - `api` — REST API Endpoints
+  - `crud` — Data access logic
+  - `models` — ORM Models
+  - `schemas` — Data validation
+  - `core` — Configurations and utilities
 
-## 🔧 Technology Stack
+- **Resilience Patterns**:
+  - Circuit Breaker (trips after 3 failures)
+  - Retry with exponential backoff (up to 5 attempts)
+
+## Technology Stack
 
 | Component        | Technology             |
-| ---------------- | ---------------------- |
-| Language         | Python 3.11            |
-| Framework        | FastAPI                |
-| ORM              | SQLAlchemy Async       |
-| Migrations       | Alembic                |
-| Cache            | Redis                  |
-| Messaging Queue  | RabbitMQ               |
-| Containerization | Docker                 |
-| Deployment       | Kubernetes             |
-| Monitoring       | Prometheus             |
-| Testing          | pytest, pytest-asyncio |
+|-----------------|-----------------------|
+| Language        | Python 3.11           |
+| Framework       | FastAPI               |
+| ORM             | SQLAlchemy Async      |
+| Database        | SQLite/PostgreSQL     |
+| Cache           | Redis                 |
+| Messaging       | RabbitMQ              |
+| Metrics         | Prometheus            |
+| Containerization| Docker                |
+| Orchestration   | Kubernetes            |
+| Testing         | pytest, pytest-asyncio|
 
----
+## Installation
 
-## 🚀 Installation
+### Prerequisites
+- Python 3.11+
+- Docker (for containerized deployment)
+- Kubernetes (for cluster deployment)
 
 ### Clone the repository
-
 ```bash
 git clone https://github.com/sbolife/iam.git
 cd iam
 ```
 
 ### Set up a virtual environment
-
 ```bash
 python -m venv venv
-source venv/bin/activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 ### Install dependencies
-
+Using pip:
 ```bash
 pip install -r requirements.txt
 ```
 
-Or using **Poetry**:
-
+Using Poetry:
 ```bash
 poetry install
 ```
 
----
-
-## ⚙️ Configuration
+## Configuration
 
 Create a `.env` file at the project root:
 
@@ -99,221 +119,141 @@ REDIS_URL=redis://localhost:6379
 RABBITMQ_URL=amqp://guest:guest@localhost:5672/
 ```
 
-Configuration is managed via `iam/core/config.py` using **Pydantic Settings**.
+## Running the Project
 
----
-
-## ▶️ Running the Project
-
-### Using Docker Compose
-
-```bash
-docker-compose up --build
-```
-
-Access: [http://localhost:8000](http://localhost:8000)
-
----
-
-### Manually
-
+### Local Development
 1. Run database migrations:
-
 ```bash
 alembic upgrade head
 ```
 
 2. Start the application:
-
 ```bash
 uvicorn iam.main:app --reload
 ```
 
----
+### Docker Compose
+```bash
+docker-compose up --build
+```
 
-## 🗂️ Available Endpoints
+Access the API at: [http://localhost:8000](http://localhost:8000)
 
-### 🩺 Health Check
+## API Endpoints
 
-* `GET /health`
-  ✅ Verifies API health status.
+### Health Check
+- `GET /health` - Verify API health status
 
----
+### Metrics
+- `GET /metrics` - Prometheus metrics endpoint
 
-### 📊 Metrics
+### User Management
+- `POST /api/v1/users/` - Create a new user
+- `GET /api/v1/users/{user_id}` - Retrieve user by ID
 
-* `GET /metrics`
-  ✅ Exposes **Prometheus** metrics.
+### Role Management
+- `POST /api/v1/roles/` - Create a new role
+- `GET /api/v1/roles/` - List all roles
 
----
+## Testing
 
-### 👤 Users
-
-* `POST /api/v1/users/`
-  ✅ Create a new user.
-
-* `GET /api/v1/users/{user_id}`
-  ✅ Retrieve a user by ID.
-
----
-
-### 🛡️ Roles
-
-* `POST /api/v1/roles/`
-  ✅ Create a new role.
-
-* `GET /api/v1/roles/`
-  ✅ List all registered roles.
-
----
-
-## 🛠️ Testing
-
-Run all tests with:
-
+Run all tests:
 ```bash
 pytest
 ```
 
-Tests are located in the `tests/` directory:
+Test categories:
+- `test_api.py` - API endpoint tests
+- `test_crud.py` - Database operation tests
+- `test_cache.py` - Redis cache tests
+- `test_metrics.py` - Prometheus tests
+- `test_resilience.py` - Circuit breaker tests
+- `test_role.py` - Role management tests
 
-* `test_api.py` — API endpoint tests.
-* `test_crud.py` — CRUD operation tests.
-* `test_cache.py` — Redis cache tests.
-* `test_metrics.py` — Prometheus metrics tests.
-* `test_resilience.py` — Circuit breaker and retry tests.
-* `test_role.py` — Role CRUD tests.
-
----
-
-## 🐳 Deployment
+## Deployment
 
 ### Docker
-
 1. Build the image:
-
 ```bash
 docker build -t iam:latest .
 ```
 
 2. Run the container:
-
 ```bash
 docker run -p 8000:8000 iam:latest
 ```
 
----
-
 ### Kubernetes
-
-Apply manifests in the `k8s/` directory:
-
+Apply manifests from the `k8s/` directory:
 ```bash
 kubectl apply -f k8s/
 ```
 
-Components included:
+Components deployed:
+- Application deployment
+- Redis cache
+- RabbitMQ messaging
+- Service exposure
+- Ingress configuration
+- Prometheus monitoring
 
-* `deployment.yml` — Application deployment.
-* `service.yml` — Service exposure.
-* `ingress.yml` — NGINX Ingress configuration.
-* `monitor.yml` — ServiceMonitor for Prometheus.
-* `redis.yml` — Redis deployment.
-* `rabbitMQ.yml` — RabbitMQ deployment.
+## Monitoring
 
----
+Prometheus metrics are exposed at `/metrics` endpoint. The Kubernetes deployment includes a ServiceMonitor for automatic Prometheus integration.
 
-## 🔄 Continuous Integration (CI)
+## Continuous Integration
 
-CI pipeline configured with **GitHub Actions**: `.github/workflows/ci.yml`.
+CI pipeline configured with GitHub Actions (`.github/workflows/ci.yml`):
+1. Code checkout
+2. Python environment setup
+3. Dependency installation
+4. Test execution
+5. Docker image build
 
-Steps:
-
-1. Checkout code.
-2. Set up Python environment.
-3. Install dependencies.
-4. Run automated tests.
-5. Build Docker image.
-
-Triggered on `push` to the `main` branch.
-
----
-
-## 📊 Monitoring
-
-* Prometheus metrics exposed at `/metrics`.
-* Kubernetes deployment includes **ServiceMonitor** for automatic Prometheus integration.
-
----
-
-## 🔁 Resilience Patterns
-
-Decorator `@resilient` implements:
-
-* **Circuit Breaker**: trips after 3 consecutive failures.
-* **Retry**: up to 5 attempts with exponential backoff.
-
-Implemented with **pybreaker** and **tenacity** libraries.
-
----
-
-## 📦 Project Structure
+## Project Structure
 
 ```plaintext
 iam/
-├── api/           # REST API endpoints
-├── core/          # Config, cache, messaging, resilience
-├── crud/          # Data access layer
-├── db/            # Database sessions and base
+├── api/           # API endpoints
+├── core/          # Config, cache, messaging
+├── crud/          # Database operations
+├── db/            # Database sessions
 ├── models/        # ORM models
 ├── schemas/       # Pydantic schemas
-├── main.py        # FastAPI application
+├── main.py        # FastAPI app
 tests/             # Automated tests
 k8s/               # Kubernetes manifests
-Dockerfile
-docker-compose.yml
 alembic/           # Database migrations
 ```
 
----
+## Contributing
 
-## 🤝 Contributing
+1. Fork the repository
+2. Create a feature branch (`feature/your-feature`)
+3. Commit your changes
+4. Push to your fork
+5. Open a Pull Request
 
-1. Fork the repository.
-2. Create a feature branch: `feature/your-feature`.
-3. Commit your changes.
-4. Push to your fork.
-5. Open a Pull Request.
+**Requirements**:
+- Follow Clean Code principles
+- Include unit tests for new features
+- Update documentation as needed
 
-Requirements:
+## License
 
-* Follow **Clean Code** principles.
-* Add **unit tests** for new features.
-* Update **documentation** when necessary.
+Distributed under the **Apache 2.0 License**. See [LICENSE](./LICENSE) for details.
 
----
+## Contact
 
-## 📄 License
+**Developer**: Suender Oliveira  
+**Email**: [suender@live.com](mailto:suender@live.com)
 
-Distributed under the **Apache 2.0 License**.
-See the [`LICENSE`](./LICENSE) file for full details.
+## Acknowledgements
 
----
-
-## ✉️ Contact
-
-Developed by: **Suender Oliveira**
-Email: [suender@live.com](mailto:suender@live.com)
-
----
-
-## 🌟 Acknowledgements
-
-* FastAPI
-* SQLAlchemy
-* Redis
-* RabbitMQ
-* Prometheus
-* Docker
-* Kubernetes
-
+- FastAPI
+- SQLAlchemy
+- Redis
+- RabbitMQ
+- Prometheus
+- Docker
+- Kubernetes
